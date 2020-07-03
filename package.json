@@ -1,0 +1,29 @@
+{
+  "name": "lighthouse-unit-conversion",
+  "version": "0.0.1",
+  "description": "Unit conversion",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conrad-blucher-institute/lighthouse-unit-conversion.git"
+  },
+  "keywords": [
+    "unit",
+    "conversion",
+    "lighthouse",
+    "water",
+    "level"
+  ],
+  "author": "Son D Nguyen, Henry Reeves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conrad-blucher-institute/lighthouse-unit-conversion/issues"
+  },
+  "homepage": "https://github.com/conrad-blucher-institute/lighthouse-unit-conversion#readme",
+  "dependencies": {
+    "mocha": "^8.0.1"
+  }
+}
