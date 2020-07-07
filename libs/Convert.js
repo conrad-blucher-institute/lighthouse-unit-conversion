@@ -1,8 +1,6 @@
-const convertUnits = require('convert-units');
-
 const Convert = {
     getList: () => {
-        return convertUnits().list();
+        return [];
     }
 };
 
