@@ -1,5 +1,5 @@
 let default_fixed = 4;
-const lhc = require('./libs/LighthouseConvert');
+const lhc = require('./libs/lighthouse-converter');
 
 exports.hello = function () {
   console.log("This is a message from the lighthouse-unit-conversion package");
