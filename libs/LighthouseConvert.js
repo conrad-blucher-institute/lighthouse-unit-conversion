@@ -3,13 +3,14 @@ const fs = require('fs');
 const _ = require('underscore');
 const configFileLoc = __dirname + '/../config/lighthouse-series.conf';
 const seriesFileLoc = __dirname + '/.././data/series.json';
+let default_percision = 4;
 
 const lhc = {
     getSeries: async () => {
         const seriesFileData = await fsp.readFile(seriesFileLoc).catch(error => console.error(error));
 
         // Return if json data exists in file
-        if (JSON.parse(seriesFileData.toString()).length > 0) {
+        if (seriesFileData && JSON.parse(seriesFileData.toString()).length > 0) {
             return JSON.parse(seriesFileData.toString());
         }
 
@@ -28,7 +29,8 @@ const lhc = {
                 precision: config[3],
                 name: config[4],
                 source: config[5],
-                fields: config[6]
+                fields: config[6],
+                convert: config[2] ? Number(config[2].replace(/[^0-9\.]+/g, '')) : 1
             };
         });
 
@@ -38,9 +40,33 @@ const lhc = {
         return series;
     },
 
-    convertObservations: async (seriesName, values) => {
-        const series = await lhc.getSeries();
-        return series;
+    convertObservations: async (seriesKey, values) => {
+        const seriesList = await lhc.getSeries();
+        const serie = _.find(seriesList, (item) => {
+            const abbr = item.abbr ? item.abbr.toLowerCase() : '';
+            const name = item.name ? item.name.toLowerCase() : '';
+            return abbr === seriesKey.toLowerCase() || name === seriesKey.toLowerCase();
+        });
+        
+        if (serie == null || serie == undefined) return null;
+
+        return _.map(values, (value) => {
+            if (serie.convert && serie.convert === 0) {
+                // do nothing
+            } else {
+                return +(value * serie.convert).toPrecision(default_percision);
+            }
+        });
+    },
+
+    getDefaultPercision: () => {
+        return default_percision;
+    },
+
+    setDefaultPercision: (newPercision) => {
+        if (!isNan(newPercision)) {
+            default_percision = newPercision;
+        }
     }
 };
 
