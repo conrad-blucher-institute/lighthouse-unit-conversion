@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/conrad-blucher-institute/lighthouse-unit-conversion#readme",
   "dependencies": {
-    "mocha": "^8.0.1"
+    "fs": "0.0.1-security",
+    "mocha": "^8.0.1",
+    "underscore": "^1.10.2"
   }
 }
