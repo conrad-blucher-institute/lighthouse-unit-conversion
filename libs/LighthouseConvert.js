@@ -4,7 +4,7 @@ const _ = require('underscore');
 const seriesJson = require('../data/series.json');
 const configFileLoc = __dirname + '/../config/lighthouse-series.conf';
 const seriesFileLoc = __dirname + '/.././data/series.json';
-let default_percision = 4;
+let default_precision = 4;
 
 // Can only be used by developers working on this package, run this function to reset the series.json file
 async function setupSeries () {
@@ -51,14 +51,14 @@ const lhc = {
     },
 
     /**
-     * Converts an array of observations given by a sx### table
+     * Converts an array of observations
      * @param {string} seriesKey either the name or abbreviation of the series
      * @param {Array<number>} values an array of values that will be converted
      * @returns {Array<number>} an array of numbers that were converted to the proper value
      * @throws {Error} serie is null or undefined, cannot be found
      */
     convertObservations: (seriesKey, values) => {
-        const serie = lhc.findSerie(seriesKey);
+        const serie = lhc.findASeries(seriesKey);
         
         if (serie == null || serie == undefined) {
             throw new Error(`Cannot find the series provided by ${seriesKey}`);
@@ -68,27 +68,27 @@ const lhc = {
             if (serie.convert && serie.convert === 0) {
                 // do nothing
             } else {
-                return +(value * serie.convert).toPrecision(default_percision);
+                return +(value * serie.convert).toPrecision(default_precision);
             }
         });
     },
 
     /**
      * Gets the default percision for all numbers being converted
-     * @returns {number} the default_percision
+     * @returns {number} the default_precision
      */
-    getDefaultPercision: () => {
-        return default_percision;
+    getDefaultPrecision: () => {
+        return default_precision;
     },
 
     /**
      * Sets the default percision for all numbers being converted
-     * @param {number} newPercision a number that determines the number of decimal places
+     * @param {number} newPrecision a number that determines the number of decimal places
      * @throws {Error} newPrecision is not a valid number
      */
-    setDefaultPercision: (newPercision) => {
-        if (!isNan(newPercision)) {
-            default_percision = newPercision;
+    setDefaultPercision: (newPrecision) => {
+        if (!isNan(newPrecision)) {
+            default_precision = newPrecision;
         } else {
             throw new Error('newPrecison is an invalid number');
         }
@@ -100,7 +100,7 @@ const lhc = {
      * @returns {Object} a serie that is found in series
      * @throws {Error} search value is null or undefined
      */
-    findSerie: (searchValue) => {
+    findASeries: (searchValue) => {
         if (searchValue == null) throw new Error('Search value is undefined or null');
         const seriesList = lhc.getSeries();
         const serie = _.find(seriesList, (item) => {
