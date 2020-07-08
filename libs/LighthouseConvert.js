@@ -42,11 +42,7 @@ const lhc = {
 
     convertObservations: async (seriesKey, values) => {
         const seriesList = await lhc.getSeries();
-        const serie = _.find(seriesList, (item) => {
-            const abbr = item.abbr ? item.abbr.toLowerCase() : '';
-            const name = item.name ? item.name.toLowerCase() : '';
-            return abbr === seriesKey.toLowerCase() || name === seriesKey.toLowerCase();
-        });
+        const serie = await lhc.findSerie(seriesKey);
         
         if (serie == null || serie == undefined) return null;
 
@@ -67,6 +63,16 @@ const lhc = {
         if (!isNan(newPercision)) {
             default_percision = newPercision;
         }
+    },
+
+    findSerie: async (searchValue) => {
+        const seriesList = await lhc.getSeries();
+        const serie = _.find(seriesList, (item) => {
+            const abbr = item.abbr ? item.abbr.toLowerCase() : '';
+            const name = item.name ? item.name.toLowerCase() : '';
+            return abbr === searchValue.toLowerCase() || name === searchValue.toLowerCase();
+        });
+        return serie;
     }
 };
 
