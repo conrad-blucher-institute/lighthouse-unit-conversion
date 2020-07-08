@@ -1,21 +1,21 @@
-const percision = 4;
+let default_fixed = 4;
 const lhc = require('./libs/LighthouseConvert');
 
 exports.hello = function () {
   console.log("This is a message from the lighthouse-unit-conversion package");
 };
 
-exports.setDecimalPlaces = (newPercision) => {
-  if (isNaN(newPercision)) return;
-  percision = newPercision;
+exports.setDecimalPlaces = (newFixed) => {
+  if (isNaN(newFixed)) return;
+  default_fixed = newFixed;
 }
 
-exports.celsiusToFahren = (celsius) => {
-  return celsius * 1.800 + 32.00;
+exports.celsiusToFahren = (celsius, fixed = default_fixed) => {
+  return +(celsius * 1.800 + 32.00).toFixed(fixed);
 }
 
-exports.fahrenToCelsius = (fahren) => {
-  return +((fahren - 32.00) / 1.800).toPrecision(percision);
+exports.fahrenToCelsius = (fahren, fixed = default_fixed) => {
+  return +((fahren - 32.00) / 1.800).toFixed(fixed);
 }
 
 exports.lhc = lhc;
