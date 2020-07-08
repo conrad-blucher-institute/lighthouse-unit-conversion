@@ -10,7 +10,7 @@ const lhc = {
 
         // Return if json data exists in file
         if (JSON.parse(seriesFileData.toString()).length > 0) {
-            return seriesFileData;
+            return JSON.parse(seriesFileData.toString());
         }
 
         const data = await fsp.readFile(configFileLoc).catch(error => console.error(error));
